@@ -9,7 +9,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     experimental: {
-      tasks: true
+      tasks: true,
+      websocket: true,
     }
   },
   modules: [
@@ -18,6 +19,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxthub/core',
     'nuxt-auth-utils',
-    'nuxt-security'
+    'nuxt-security',
+    '@nuxt/test-utils/module'
   ]
 })
