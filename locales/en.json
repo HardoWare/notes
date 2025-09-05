@@ -1,0 +1,36 @@
+{
+  "page": {
+    "name": "Notes"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "register": "Register",
+    "login-with": "Login with",
+    "forgot": "Forgot password?",
+    "reset": "Reset it here.",
+    "logout": "Logout",
+    "login-successful": "Logged in successful.",
+    "register-successful": "Registration success.",
+    "password-strength": {
+      "at-least-8-characters": "At least 8 characters",
+      "at-least-1-number": "At least 1 number",
+      "at-least-1-lowercase": "At least 1 lowercase letter",
+      "at-least-1-uppercase": "At least 1 uppercase letter",
+      "enter-password": "Enter password",
+      "weak-password": "Weak password",
+      "medium-password": "Medium password",
+      "strong-password": "Strong password",
+      "must-contain": "Password must contain"
+    }
+  },
+  "common": {
+    "or": "or",
+    "light-mode": "Light mode",
+    "dark-mode": "Dark mode",
+    "settings": "Settings",
+    "success": "Success",
+    "error": "Error"
+  }
+}
