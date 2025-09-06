@@ -1,6 +1,6 @@
 import {registerValidator} from '#shared/validators'
 import bcrypt from 'bcrypt'
-import {count} from 'drizzle-orm'
+import {mapZodErrorsToForm} from '#shared/utils'
 
 export default eventHandler(async (event) => {
 	const { success, data, error } = registerValidator.safeParse(await readBody(event))
@@ -9,20 +9,26 @@ export default eventHandler(async (event) => {
 		throw createError({
 			statusCode: 400,
 			statusMessage: 'Invalid request data',
-			data: error
+			data: mapZodErrorsToForm(error?.issues),
 		})
 	}
 	
 	const userCount = await useDrizzle()
-		.select({ count: count() })
+		.select()
 		.from(tables.users)
-		.where(eq(tables.users.email, data.email))
+		.where(and(
+			eq(tables.users.email, data.email),
+			eq(tables.users.provider, 'local'),
+		))
 		.get()
 
-	if (userCount) {
+	if (!userCount) {
 		throw createError({
 			statusCode: 400,
-			statusMessage: 'User with this email already exists'
+			statusMessage: 'User with this email already exists',
+			data: mapZodErrorsToForm([
+				{ code: 'custom', path: ['email'], message: 'User with this email already exists' }
+			])
 		})
 	}
 	
@@ -33,16 +39,23 @@ export default eventHandler(async (event) => {
 		.values({
 			...data,
 			password: hash,
-		}).returning().get()
+		})
+		.returning()
+		.get()
 	
 	await setUserSession(event, {
 		user: {
-			id: user.id,
 			uuid: user.uuid,
-			username: user.username,
+			provider: user.provider,
+			login: user.uuid,
+			avatar: user.avatar ?? undefined,
+		},
+		secure: {
+			userId: user.id,
+			providerId: user.providerId,
 			email: user.email,
-			avatar: user.avatar || undefined
-		}
+		},
+		loggedInAt: Date.now(),
 	})
 	
 	return {}

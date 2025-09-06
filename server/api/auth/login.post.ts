@@ -1,45 +1,62 @@
 import {loginValidator} from '#shared/validators'
 import bcrypt from 'bcrypt'
+import {mapZodErrorsToForm} from '#shared/utils'
 
 export default eventHandler(async (event) => {
 	const { success, data, error } = loginValidator.safeParse(await readBody(event))
+	
+	// const t = await useTranslation(event)
 	
 	if (!success) {
 		throw createError({
 			statusCode: 400,
 			statusMessage: 'Invalid request data',
-			data: error
+			data: mapZodErrorsToForm(error?.issues)
 		})
 	}
 	
 	const user = await useDrizzle()
 		.select()
 		.from(tables.users)
-		.where(eq(tables.users.email, data.email))
+		.where(and(
+			eq(tables.users.email, data.email),
+			eq(tables.users.provider, 'local'),
+		))
 		.get()
 	
 	if (!user) {
 		throw createError({
 			statusCode: 400,
 			statusMessage: 'User dose not exist',
+			data: mapZodErrorsToForm([
+				{ code: 'custom', path: ['email'], message: 'User dose not exist' }
+			])
 		})
 	}
 	
-	if (!await bcrypt.compare(data.password, user.password)) {
+	if (!user.password || !await bcrypt.compare(data.password, user.password)) {
 		throw  createError({
 			statusCode: 400,
 			statusMessage: 'Invalid email or password',
+			data: mapZodErrorsToForm([
+				{ code: 'custom', path: ['email'], message: 'Invalid email or password' }
+			])
 		})
 	}
 	
 	await setUserSession(event, {
 		user: {
-			id: user.id,
 			uuid: user.uuid,
-			username: user.username,
+			provider: user.provider,
+			login: user.uuid,
+			avatar: user.avatar ?? undefined,
+		},
+		secure: {
+			userId: user.id,
+			providerId: user.providerId,
 			email: user.email,
-			avatar: user.avatar || undefined
-		}
+		},
+		loggedInAt: Date.now(),
 	})
 	
 	return {}

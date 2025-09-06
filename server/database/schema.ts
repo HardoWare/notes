@@ -5,12 +5,14 @@ import { v4 as uuid } from 'uuid'
 export const users = sqliteTable('users', {
 	id: integer('id').primaryKey({ autoIncrement: true }),
 	uuid: text('uuid').notNull().unique().default(uuid()),
-	username: text('name').notNull(),
-	email: text('email').notNull().unique(),
-	password: text('password').notNull(),
+	provider: text('provider').notNull().default('local'),
+	providerId: text('provider_id'),
+	login: text('login').notNull(),
+	email: text('email').unique(),
+	password: text('password'),
 	avatar: text('avatar'),
 	createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(unixepoch())`),
-	editedAt: integer('created_at', { mode: 'timestamp' }),
+	editedAt: integer('edited_at', { mode: 'timestamp' }),
 })
 
 export const notes = sqliteTable('notes', {
@@ -21,7 +23,7 @@ export const notes = sqliteTable('notes', {
 	image: text('images', { mode: 'json' })
 		.$type<string[]>()
 		.default(sql`'[]'`),
-	ownerId: integer('owner_id').references(() => users.id).notNull(),
+	ownerId: integer('owner_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
 	createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
 	editedAt: integer('created_at', { mode: 'timestamp' }),
 })
