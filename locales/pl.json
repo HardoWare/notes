@@ -1,0 +1,36 @@
+{
+  "page": {
+    "name": "Notatki"
+  },
+  "auth": {
+    "email": "E-mail",
+    "password": "Hasło",
+    "login": "Zaloguj się",
+    "register": "Zarejestruj się",
+    "login-with": "Zaloguj się przez",
+    "forgot": "Zapomniałeś hasła?",
+    "reset": "Zresetuj tutaj.",
+    "logout": "Wyloguj się",
+    "login-successful": "Logowanie zakończone sukcesem.",
+    "register-successful": "Rejestracja zakończona sukcesem.",
+    "password-strength": {
+      "at-least-8-characters": "Co najmniej 8 znaków",
+      "at-least-1-number": "Co najmniej 1 cyfrę",
+      "at-least-1-lowercase": "Co najmniej 1 małą literę",
+      "at-least-1-uppercase": "Co najmniej 1 wielką literę",
+      "enter-password": "Wpisz hasło",
+      "weak-password": "Słabe hasło",
+      "medium-password": "Średnie hasło",
+      "strong-password": "Silne hasło",
+      "must-contain": "Hasło musi zawierać"
+    }
+  },
+  "common": {
+    "or": "lub",
+    "light-mode": "Tryb jasny",
+    "dark-mode": "Tryb ciemny",
+    "settings": "Ustawienia",
+    "success": "Sukces",
+    "error": "Błąd"
+  }
+}

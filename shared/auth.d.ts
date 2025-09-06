@@ -1,20 +1,21 @@
 
 declare module '#auth-utils' {
-	interface User {
-		id: number
-		uuid: string
-		username: string
-		email: string
-		avatar: string | undefined
+	interface UserSession {
+		loggedInAt: number
 	}
 	
-	// interface UserSession {
-	// 	// Add your own fields
-	// }
+	interface User {
+		uuid: string
+		provider: string
+		login: string
+		avatar?: string
+	}
 	
-	// interface SecureSessionData {
-	// 	// Add your own fields
-	// }
+	interface SecureSessionData {
+		userId: number
+		providerId?: string
+		email?: string
+	}
 }
 
 export {}
