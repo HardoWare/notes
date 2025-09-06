@@ -26,15 +26,14 @@ export default defineOAuthGitHubEventHandler({
 		
 		await setUserSession(event, {
 			user: {
-				uuid: userGithub.uuid,
+				id: userGithub.id,
 				provider: userGithub.provider,
-				login: userGithub.uuid,
+				login: userGithub.login,
+				email: userGithub.email,
 				avatar: userGithub.avatar,
 			},
 			secure: {
-				userId: userGithub.id,
 				providerId: userGithub.providerId,
-				email: userGithub.email ?? undefined,
 			},
 			loggedInAt: Date.now(),
 		})
@@ -43,6 +42,6 @@ export default defineOAuthGitHubEventHandler({
 	},
 	async onError(event, error) {
 		console.error('OAuth error:', error)
-		return sendRedirect(event, '/login?error=oauth')
+		return sendRedirect(event, '/login?error=github-oauth')
 	}
 })

@@ -5,16 +5,15 @@ declare module '#auth-utils' {
 	}
 	
 	interface User {
-		uuid: string
+		id: string
 		provider: string
 		login: string
+		email?: string
 		avatar?: string
 	}
 	
 	interface SecureSessionData {
-		userId: number
 		providerId?: string
-		email?: string
 	}
 }
 

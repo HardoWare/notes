@@ -46,15 +46,11 @@ export default eventHandler(async (event) => {
 	
 	await setUserSession(event, {
 		user: {
-			uuid: user.uuid,
+			id: user.id,
 			provider: user.provider,
 			login: user.login,
-			avatar: user.avatar ?? undefined,
-		},
-		secure: {
-			userId: user.id,
-			providerId: user.providerId,
 			email: user.email,
+			avatar: user.avatar ?? undefined,
 		},
 		loggedInAt: Date.now(),
 	})
