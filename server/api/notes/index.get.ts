@@ -4,7 +4,9 @@ export default eventHandler(async (event) => {
 	const notes = await useDrizzle()
 		.select()
 		.from(tables.notes)
-		.where(eq(tables.notes.ownerId, Number(user.id)))
+		.where(
+			eq(tables.notes.ownerId, user.id)
+		)
 		.all()
 	
 	return notes ?? []

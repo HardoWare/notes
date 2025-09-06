@@ -35,7 +35,7 @@ export const notes = sqliteTable('notes', {
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
 		.default(sql`(unixepoch())`),
-	editedAt: integer('edited_at', { mode: 'timestamp' }),
+	editedAt: integer('edited_at', { mode: 'timestamp' })
 })
 
 export const tags = sqliteTable('tags', {

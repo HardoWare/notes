@@ -5,7 +5,7 @@ declare module '#auth-utils' {
 	}
 	
 	interface User {
-		id: string
+		id: number
 		provider: string
 		login: string
 		email?: string

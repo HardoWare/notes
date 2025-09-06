@@ -12,3 +12,10 @@ export  const loginValidator = z.object({
   password: z.string().min(8).max(64),
 })
 
+export const noteCreateValidator = z.object({
+	title: z.string().max(255).optional(),
+	description: z.string().min(1),
+	isCheckList: z.boolean().optional(),
+	tags: z.array(z.number()).optional(),
+	image: z.array(z.url()).optional(),
+})
