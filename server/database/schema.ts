@@ -1,6 +1,5 @@
 import { sql } from 'drizzle-orm'
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
-import { v4 as uuid } from 'uuid'
 
 export const users = sqliteTable('users', {
 	id: integer('id')
@@ -34,8 +33,9 @@ export const notes = sqliteTable('notes', {
 		.references(() => users.id, { onDelete: 'cascade' })
 		.notNull(),
 	createdAt: integer('created_at', { mode: 'timestamp' })
-		.notNull(),
-	editedAt: integer('created_at', { mode: 'timestamp' }),
+		.notNull()
+		.default(sql`(unixepoch())`),
+	editedAt: integer('edited_at', { mode: 'timestamp' }),
 })
 
 export const tags = sqliteTable('tags', {
@@ -47,6 +47,9 @@ export const tags = sqliteTable('tags', {
 	ownerId: integer('owner_id')
 		.references(() => users.id, { onDelete: 'cascade' })
 		.notNull(),
+	createdAt: integer('created_at', { mode: 'timestamp' })
+		.notNull()
+		.default(sql`(unixepoch())`),
 })
 
 export const notesToTags = sqliteTable('notes_to_tags', {
@@ -58,4 +61,7 @@ export const notesToTags = sqliteTable('notes_to_tags', {
 	tagId: integer('tag_id')
 		.references(() => tags.id, { onDelete: 'cascade' })
 		.notNull(),
+	createdAt: integer('created_at', { mode: 'timestamp' })
+		.notNull()
+		.default(sql`(unixepoch())`),
 })
