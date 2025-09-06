@@ -28,7 +28,7 @@ export default eventHandler(async (event) => {
 			statusMessage: 'User with this email already exists',
 			data: mapZodErrorsToForm([
 				{ code: 'custom', path: ['email'], message: 'User with this email already exists' }
-			])
+			]),
 		})
 	}
 	
@@ -47,7 +47,7 @@ export default eventHandler(async (event) => {
 		user: {
 			uuid: user.uuid,
 			provider: user.provider,
-			login: user.uuid,
+			login: user.login,
 			avatar: user.avatar ?? undefined,
 		},
 		secure: {
