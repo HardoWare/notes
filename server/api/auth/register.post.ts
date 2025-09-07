@@ -22,7 +22,7 @@ export default eventHandler(async (event) => {
 		))
 		.get()
 
-	if (!userCount) {
+	if (userCount) {
 		throw createError({
 			statusCode: 400,
 			statusMessage: 'User with this email already exists',
