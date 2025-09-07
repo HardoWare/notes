@@ -27,7 +27,8 @@ export default eventHandler(async (event) => {
 			statusCode: 400,
 			statusMessage: 'User with this email already exists',
 			data: mapZodErrorsToForm([
-				{ code: 'custom', path: ['email'], message: 'User with this email already exists' }
+				{ code: 'custom', path: ['email'], message: 'validator.email-taken' },
+				{ code: 'custom', path: ['password'], message: 'validator.email-taken' },
 			]),
 		})
 	}

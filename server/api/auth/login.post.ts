@@ -24,22 +24,13 @@ export default eventHandler(async (event) => {
 		))
 		.get()
 	
-	if (!user) {
-		throw createError({
-			statusCode: 400,
-			statusMessage: 'User dose not exist',
-			data: mapZodErrorsToForm([
-				{ code: 'custom', path: ['email'], message: 'User dose not exist' }
-			])
-		})
-	}
-	
-	if (!user.password || !await bcrypt.compare(data.password, user.password)) {
+	if (!user || (!user.password) || !await bcrypt.compare(data.password, user.password)) {
 		throw  createError({
 			statusCode: 400,
 			statusMessage: 'Invalid email or password',
 			data: mapZodErrorsToForm([
-				{ code: 'custom', path: ['email'], message: 'Invalid email or password' }
+				{ code: 'custom', path: ['email'], message: 'validator.email-or-password-incorrect' },
+				{ code: 'custom', path: ['password'], message: 'validator.email-or-password-incorrect' },
 			])
 		})
 	}
