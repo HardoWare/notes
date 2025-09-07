@@ -7,18 +7,17 @@ type LoginSchema = z.output<typeof loginValidator>
 type RegisterSchema = z.output<typeof registerValidator>
 const localePath = useLocalePath()
 const { locales, locale, setLocale, t } = useI18n()
-
-const settings = useSettingsStore()
+const $t = useI18n().t
 
 const { fetch } = useUserSession()
 
-const $t = useI18n().t
+const settings = useSettingsStore()
 const toast = useToast()
 const loginForm = ref<Form<LoginSchema>>()
 const registerForm = ref<Form<LoginSchema>>()
-const error = ref([])
 const isRegister = ref(false)
-const state = reactive<Partial<LoginSchema | RegisterSchema>>({
+const state = reactive<Partial<LoginSchema & RegisterSchema>>({
+	login: undefined,
 	email: undefined,
 	password: undefined,
 })
@@ -26,7 +25,10 @@ const state = reactive<Partial<LoginSchema | RegisterSchema>>({
 async function onSubmitLogin(event: FormSubmitEvent<LoginSchema>) {
 	await $fetch('/api/auth/login', {
 		method: 'POST',
-		body: event.data,
+		body: {
+			email: event.data.email,
+			password: event.data.password,
+		},
 	}).then(() => {
 		fetch()
 		toast.add({
@@ -79,7 +81,7 @@ definePageMeta({
 </script>
 
 <template>
-	<div class="flex justify-center p-2">
+	<div class="flex justify-center mt-12">
 		<UCard variant="subtle" :ui="{ root: 'w-xl', body: 'space-y-4 ' }">
 			<template #header>
 				<div class="flex flex-row justify-between">
@@ -116,24 +118,44 @@ definePageMeta({
 			<UForm v-if="isRegister" ref="registerForm" :schema="registerValidator" :state="state" class="space-y-4 " @submit="onSubmitRegister">
 				<UFormField :label="$t('auth.email')" name="email" >
 					<UInput v-model="state.email" class="w-full" />
+					<template #error="{ error }">
+						<div v-if="error" class="mt-2 text-error">
+							{{ $t(error.toString()) }}
+						</div>
+					</template>
 				</UFormField>
 				
 				<PasswordStrength v-model="state.password" />
 				
-				<UFormField v-if="error.length > 0"  :label="$t('auth.email')" name="error" >
-					<UInput v-model="state.email" class="w-full" />
+				<UFormField :label="$t('auth.username')" name="login">
+					<UInput v-model="state.login" class="w-full" />
+					<template #error="{ error }">
+						<div v-if="error" class="mt-2 text-error">
+							{{ $t(error.toString()) }}
+						</div>
+					</template>
 				</UFormField>
 				
 				<UButton :label="$t('auth.register')" type="submit" variant="outline" block />
 			</UForm>
 			
 			<UForm v-else ref="loginForm" :schema="loginValidator" :state="state" class="space-y-4 " @submit="onSubmitLogin">
-				<UFormField :label="$t('auth.email')" name="email" >
+				<UFormField :label="$t('auth.email')" name="email">
 					<UInput v-model="state.email" class="w-full" />
+					<template #error="{ error }">
+						<div v-if="error" class="mt-2 text-error">
+							{{ $t(error.toString()) }}
+						</div>
+					</template>
 				</UFormField>
 				
 				<UFormField :label="$t('auth.password')" name="password">
 					<UInput v-model="state.password" type="password" class="w-full" />
+					<template #error="{ error }">
+						<div v-if="error" class="mt-2 text-error">
+							{{ $t(error.toString()) }}
+						</div>
+					</template>
 				</UFormField>
 			
 				<UButton :label="$t('auth.login')" type="submit" variant="outline" block />

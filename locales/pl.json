@@ -6,6 +6,7 @@
     "email": "E-mail",
     "password": "Hasło",
     "login": "Zaloguj się",
+    "username": "Nazwa użytkownika",
     "register": "Zarejestruj się",
     "login-with": "Zaloguj się przez",
     "forgot": "Zapomniałeś hasła?",
@@ -32,5 +33,16 @@
     "settings": "Ustawienia",
     "success": "Sukces",
     "error": "Błąd"
+  },
+  "validator": {
+    "required": "Pole jest wymagane",
+    "email-invalid": "Niepoprawny adres e-mail",
+    "password-invalid": "Niepoprawne hasło",
+    "password-minimal": "Hasło musi mieć co najmniej 8 znaków",
+    "password-regex": "Hasło musi zawierać co najmniej jedną wielką literę, jedną małą literę i jedną cyfrę",
+    "login-invalid": "Niepoprawny login",
+    "login-minimal": "Login musi mieć co najmniej 3 znaki",
+    "login-maximal": "Login może mieć maksymalnie 39 znaków",
+    "login-regex": "Login może zawierać tylko litery, cyfry i pojedyncze myślniki"
   }
 }

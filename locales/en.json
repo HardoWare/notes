@@ -6,6 +6,7 @@
     "email": "Email",
     "password": "Password",
     "login": "Login",
+    "username": "Username",
     "register": "Register",
     "login-with": "Login with",
     "forgot": "Forgot password?",
@@ -32,5 +33,16 @@
     "settings": "Settings",
     "success": "Success",
     "error": "Error"
+  },
+  "validator": {
+    "required": "This field is required",
+    "email-invalid": "Invalid email address",
+    "password-invalid": "Invalid password",
+    "password-minimal": "Password must be at least 8 characters",
+    "password-regex": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+    "login-invalid": "Invalid login",
+    "login-minimal": "Login must be at least 3 characters",
+    "login-maximal": "Login must be at most 39 characters",
+    "login-regex": "Login can only contain letters, numbers, and single hyphens"
   }
 }
