@@ -36,7 +36,9 @@
   },
   "validator": {
     "required": "This field is required",
+    "email-or-password-incorrect": "Email or password is incorrect",
     "email-invalid": "Invalid email address",
+    "email-taken": "User with this email already exists",
     "password-invalid": "Invalid password",
     "password-minimal": "Password must be at least 8 characters",
     "password-regex": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
